@@ -1,4 +1,11 @@
 class ApplicationController < ActionController::API
+    before_action :configure_permitted_parameters, if: :devise_controller?
+
+    protected
+    def configure_permitted_parameters
+        devise_parameter_sanitizer.permit(:sign_up, keys: %i[username gender date_of_birth role])
+        devise_parameter_sanitizer.permit(:account_update, keys: %i[username gender date_of_birth role])
+    end
     # Make the current_user method available to views also, not just controllers:
     # helper_method :current_user
 

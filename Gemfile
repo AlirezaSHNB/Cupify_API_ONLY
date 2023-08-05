@@ -69,3 +69,7 @@ end
 
 gem 'json'
 gem 'rack-cors'
+gem 'devise'
+gem 'devise-jwt'
+gem 'jsonapi-serializer'
+gem 'dotenv-rails', require: 'dotenv/rails-now'

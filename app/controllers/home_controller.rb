@@ -8,6 +8,6 @@ class HomeController < ApplicationController
         @persons = Participant.single_players.limit(10)
         @players = Player.all.limit(10)
 
-        render json: {cups: @cups, teams: @teams, persons: @persons, players: @player }
+        render json: {cups: @cups, teams: @teams, persons: @persons, players: @players }
     end
 end

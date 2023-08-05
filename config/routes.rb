@@ -1,12 +1,15 @@
 Rails.application.routes.draw do
+  devise_for :users, path: '', path_names: {
+    sign_in: 'login',
+    sign_out: 'logout',
+    registration: 'signup'
+  },
+  controllers: {
+    sessions: 'users/sessions',
+    registrations: 'users/registrations'
+  }
   root 'home#index'
 
-  get 'users/new', to: 'users#new', as: :new_user
-  post 'users', to: 'users#create'
-  get '/users/dashboard', to: 'users#dashboard'
-  get '/login', to: 'sessions#new'
-  post '/login', to: 'sessions#create'
-  delete '/logout', to: 'sessions#destroy'
   post '/check_username_availability', to: 'users#check_username_availability'
 
 
