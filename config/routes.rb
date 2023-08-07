@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  root 'home#index'
+
   devise_for :users, path: '', path_names: {
     sign_in: 'login',
     sign_out: 'logout',
@@ -8,10 +10,9 @@ Rails.application.routes.draw do
     sessions: 'users/sessions',
     registrations: 'users/registrations'
   }
-  root 'home#index'
 
+  get '/get_current_user', to: "users#get_current_user"
   post '/check_username_availability', to: 'users#check_username_availability'
-
 
   resources :cups do
     resources :leagues do
@@ -35,4 +36,5 @@ Rails.application.routes.draw do
   resources :players do
     get 'search_by_name', on: :collection
   end
+
 end

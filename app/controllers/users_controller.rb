@@ -1,48 +1,31 @@
 class UsersController < ApplicationController
     # protect_from_forgery with: :exception
     # before_action :authorize, only: [:dashboard, :show, :edit, :update, :destroy]
+    before_action :authenticate_user!, except: [:get_current_user]
+
+    def get_current_user
+        jwt_payload = JWT.decode(request.headers['Authorization'].split(' ').last, ENV['secret_key']).first
+        current_user = User.find(jwt_payload['sub'])
+        response.headers['Custom-Header'] = 'Header Value'
+        render json: current_user.as_json(:except => [:jti]), status: :ok
+    end
 
     def index
         @users = User.all
 
-        render json: {users: @users}
+        render json: {users: @users.map { |user| user.as_json(:except => [:jti]) }}, status: :ok
     end
 
     def show
         @user = User.find(params[:id])
 
-        render json: {user: @user}
-    end
-
-    def new
-        @user = User.new
-
-        render json: {user: @user}
-    end
-
-    def create
-        @user = User.new(user_params)
-        @user.role = Role.find(1) # temporary admin
-        @user.email.downcase!
-        result = @user.save
-        if result
-            render json: {message: "Account created successfully!"}, status: :created
-        else
-            error_messages = ""
-            if @user.errors.any?
-                @user.errors.full_messages.each do |message|
-                    error_messages << "#{message}\n"
-                end
-            end
-            
-            render json: {message: "Oops, couldn't create account.Please make sure you are using a valid email and password and try again.errors:\n#{error_messages}"}, status: :unprocessable_entity
-        end
+        render json: {user: @user.as_json(:except => [:jti])}, status: :ok
     end
 
     def edit
         @user = User.find(params[:id])
 
-        render json: {user: @user}
+        render json: {user: @user.except(:jti)}
     end
 
     def update
@@ -69,9 +52,6 @@ class UsersController < ApplicationController
         else
             render json: {message: "Oops, couldn't destroy user."}, status: :bad_request
         end
-    end
-
-    def dashboard
     end
 
     def check_username_availability
