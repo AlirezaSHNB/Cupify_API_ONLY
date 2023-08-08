@@ -12,21 +12,27 @@ class Users::SessionsController < Devise::SessionsController
   end
 
   def respond_to_on_destroy
-    if request.headers['Authorization'].present?
-      jwt_payload = JWT.decode(request.headers['Authorization'].split(' ').last, ENV['secret_key']).first
+    jwt_token = request.headers['Authorization']&.split(' ')&.last
+    if jwt_token.present?
+      jwt_payload = JWT.decode(jwt_token, ENV['secret_key']).first
       current_user = User.find(jwt_payload['sub'])
-    end
-    
-    if current_user
-      render json: {
-        message: 'Logged out successfully.'
-      }, status: :ok
+  
+      if current_user
+        render json: {
+          message: 'Logged out successfully.'
+        }, status: :ok
+      else
+        render json: {
+          message: "Couldn't find an active session."
+        }, status: :unauthorized
+      end
     else
       render json: {
-        message: "Couldn't find an active session."
-      }, status: :unauthorized
+        message: "JWT token not present."
+      }, status: :unprocessable_entity
     end
   end
+  
   # before_action :configure_sign_in_params, only: [:create]
 
   # GET /resource/sign_in

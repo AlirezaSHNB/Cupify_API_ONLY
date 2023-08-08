@@ -6,7 +6,6 @@ class UsersController < ApplicationController
     def get_current_user
         jwt_payload = JWT.decode(request.headers['Authorization'].split(' ').last, ENV['secret_key']).first
         current_user = User.find(jwt_payload['sub'])
-        response.headers['Custom-Header'] = 'Header Value'
         render json: current_user.as_json(:except => [:jti]), status: :ok
     end
 
