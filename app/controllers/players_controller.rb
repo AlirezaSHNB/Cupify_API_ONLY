@@ -4,9 +4,13 @@ class PlayersController < ApplicationController
     # before_action :authorize
 
     def index
+        @players = Player.all
+
+        render json: {players: @players }
     end
     
     def show
+        
     end
 
     def search_by_name

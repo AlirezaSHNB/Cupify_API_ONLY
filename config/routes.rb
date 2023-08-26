@@ -32,7 +32,10 @@ Rails.application.routes.draw do
       end
     end
   end
-  resources :participants
+  resources :participants do
+    get 'single_player_teams', on: :collection
+    get 'multiple_player_teams', on: :collection
+  end
   resources :players do
     get 'search_by_name', on: :collection
   end

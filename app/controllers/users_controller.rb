@@ -4,9 +4,13 @@ class UsersController < ApplicationController
     before_action :authenticate_user!, except: [:get_current_user]
 
     def get_current_user
-        jwt_payload = JWT.decode(request.headers['Authorization'].split(' ').last, ENV['secret_key']).first
-        current_user = User.find(jwt_payload['sub'])
-        render json: current_user.as_json(:except => [:jti]), status: :ok
+        if request.headers['Authorization'].nil?
+            render json: {message: "You are not authorized."} , status: :unauthorized
+        else
+            jwt_payload = JWT.decode(request.headers['Authorization'].split(' ').last, ENV['secret_key']).first
+            current_user = User.find(jwt_payload['sub'])
+            render json: current_user.as_json(:except => [:jti]), status: :ok
+        end
     end
 
     def index

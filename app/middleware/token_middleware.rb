@@ -6,7 +6,6 @@ class TokenMiddleware
     def call(env)
         # Do something with the request before it reaches the app
         status, headers, response = @app.call(env)
-
         return [status, headers, response] if response.try(:body).nil?
 
         # Parse the json string to hash object in order to modify it

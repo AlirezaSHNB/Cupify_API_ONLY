@@ -14,7 +14,7 @@ class CupsController < ApplicationController
     def show
         @cup = Cup.find(params[:id])
         @football_base_fields = ["futsal", "football", "individual_fifa23", "team_fifa23", "individual_pes23", "team_pes23"]
-        @knockout = @cup.knockouts[0] if ["knockout", "combination"].include?(@cup.mode)
+        @knockout = @cup.knockouts.first if ["knockout", "combination"].include?(@cup.mode)
 
         render json: {cup: @cup, football_base_fields: @football_base_fields, knockout: @knockout }
     end
