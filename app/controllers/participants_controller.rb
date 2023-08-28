@@ -6,6 +6,12 @@ class ParticipantsController < ApplicationController
         render json: {teams: @participants }
     end
 
+    def show
+        @team = Participant.find(params[:id])
+
+        render json: {team: @team}
+    end
+
     def single_player_teams
         @single_player_participants = Participant.single_players
 

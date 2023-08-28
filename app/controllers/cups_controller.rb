@@ -7,16 +7,16 @@ class CupsController < ApplicationController
 
     def index
         @cups = Cup.all
+        @football_base_fields = ["futsal", "football", "individual_fifa23", "team_fifa23", "individual_pes23", "team_pes23"]
 
-        render json: {cups: @cups }
+        render json: {cups: @cups.as_json(include: :winner), football_base_fields: @football_base_fields }
     end
 
     def show
         @cup = Cup.find(params[:id])
-        @football_base_fields = ["futsal", "football", "individual_fifa23", "team_fifa23", "individual_pes23", "team_pes23"]
         @knockout = @cup.knockouts.first if ["knockout", "combination"].include?(@cup.mode)
 
-        render json: {cup: @cup, football_base_fields: @football_base_fields, knockout: @knockout }
+        render json: {cup: @cup, knockout: @knockout }
     end
 
     def new
@@ -27,18 +27,18 @@ class CupsController < ApplicationController
 
     def create
         @cup = Cup.new(name: params[:name],
-            start_date: Date.strptime(params[:start_date], "%m/%d/%Y"),
-            end_date: Date.strptime(params[:end_date], "%m/%d/%Y"),
+            start_date: Date.parse(params[:start_date]),
+            end_date: Date.parse(params[:end_date]),
             field: Cup.fields[params[:field]],
             number_of_players: params[:number_of_players].to_i, state: 0,
             min_number_of_participants: params[:min_number_of_participants].to_i,
             max_number_of_participants: params[:max_number_of_participants].to_i,
-            mode: Cup.mode[params[:type]])
+            mode: Cup.modes[params[:type]])
         result = @cup.save
 
         if result
             create_league_and_knockout(params, @cup)
-            render json: {cup: @cup, message: "Cup created successfully!"}, status: :created
+            render json: {message: "Cup created successfully!"}, status: :created
         else
             render_error(@cup)
         end
@@ -99,8 +99,8 @@ class CupsController < ApplicationController
             points_for_draw: params[:points_for_draw_input].to_i,
             points_for_lost: params[:points_for_lost_input].to_i,
             is_round_trip: params[:round_trip_input] == "1",
-            start_date: Date.strptime(params[:start_date], "%m/%d/%Y"),
-            end_date: Date.strptime(params[:end_date], "%m/%d/%Y"), state: 0,
+            start_date: Date.parse(params[:start_date]),
+            end_date: Date.parse(params[:end_date]), state: 0,
             win_order: generate_win_order(params) ,cup: cup)
     end
 
@@ -108,8 +108,8 @@ class CupsController < ApplicationController
         knockout = Knockout.create( is_round_trip: params[:round_trip_input] == "1",
             away_goal: params[:away_goal] == "1",
             third_place_match: params[:third_place_match] == "1",
-            start_date: Date.strptime(params[:start_date], "%m/%d/%Y"),
-            end_date: Date.strptime(params[:end_date], "%m/%d/%Y"), state: 0, cup: cup)
+            start_date: Date.parse(params[:start_date]),
+            end_date: Date.parse(params[:end_date]), state: 0, cup: cup)
     end
 
     def generate_league_for_combination_cup(params, cup)
@@ -117,8 +117,8 @@ class CupsController < ApplicationController
             points_for_draw: params[:points_for_draw_input].to_i,
             points_for_lost: params[:points_for_lost_input].to_i,
             is_round_trip: params[:round_trip_input] == "1",
-            start_date: Date.strptime(params[:start_date], "%m/%d/%Y"),
-            end_date: Date.strptime(params[:end_date], "%m/%d/%Y"), state: 0,
+            start_date: Date.parse(params[:start_date]),
+            end_date: Date.parse(params[:end_date]), state: 0,
             win_order: generate_win_order(params) ,cup: cup)
     end
 
@@ -153,18 +153,38 @@ class CupsController < ApplicationController
     end
 
     def create_league_and_knockout(params, cup)
-        case params[:config_option]
+        case params[:type]
         when "league"
             league = generate_league_for_league_cup(params, cup)
-            render_error(league) unless league.save
+            result = league.save
+            unless result
+                Cup.last.destroy
+                render_error(league)
+                return
+            end
         when "knockout"
             knockout = generate_knockout_for_knockout_cup(params, cup)
-            render_error(knockout) unless knockout.save
+            result = knockout.save
+            unless result
+                Cup.last.destroy
+                render_error(knockout)
+                return
+            end
         when "combination"
             league = generate_league_for_combination_cup(params, cup)
-            render_error(league) unless league.save
+            result = league.save
+            unless result
+                Cup.last.destroy
+                render_error(league)
+                return
+            end
             knockout = generate_knockout_for_combination_cup(params, cup)
-            render_error(knockout) unless knockout.save
+            result = knockout.save
+            unless result
+                Cup.last.destroy
+                render_error(knockout)
+                return
+            end
         else
             render json: {message: "Oops, couldn't create cup. error :\nType of cup is not valid."},
                 status: :unprocessable_entity and return

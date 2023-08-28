@@ -10,7 +10,9 @@ class PlayersController < ApplicationController
     end
     
     def show
-        
+        @player = Player.find(params[:id])
+
+        render json: {player: @player}
     end
 
     def search_by_name

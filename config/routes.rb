@@ -14,6 +14,11 @@ Rails.application.routes.draw do
   get '/get_current_user', to: "users#get_current_user"
   post '/check_username_availability', to: 'users#check_username_availability'
 
+  # devise_scope :user do
+  #   get   "/check_session_timeout"    => "session_timeout#check_session_timeout"
+  #   get   "/session_timeout"          => "session_timeout#render_timeout"
+  # end
+
   resources :cups do
     resources :leagues do
       resources :matches do
