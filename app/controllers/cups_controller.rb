@@ -1,9 +1,6 @@
 class CupsController < ApplicationController
-
     # protect_from_forgery with: :exception
     # before_action :authorize
-
-    # ----- add these lines here: -----
 
     def index
         @cups = Cup.all
@@ -95,43 +92,43 @@ class CupsController < ApplicationController
     private
 
     def generate_league_for_league_cup(params, cup)
-        league = League.new(points_for_win: params[:points_for_win_input].to_i,
-            points_for_draw: params[:points_for_draw_input].to_i,
-            points_for_lost: params[:points_for_lost_input].to_i,
-            is_round_trip: params[:round_trip_input] == "1",
+        league = League.new(points_for_win: params[:points_for_win].to_i,
+            points_for_draw: params[:points_for_draw].to_i,
+            points_for_lost: params[:points_for_lost].to_i,
+            is_round_trip: params[:round_trip] == "on",
             start_date: Date.parse(params[:start_date]),
             end_date: Date.parse(params[:end_date]), state: 0,
             win_order: generate_win_order(params) ,cup: cup)
     end
 
     def generate_knockout_for_knockout_cup(params, cup)
-        knockout = Knockout.create( is_round_trip: params[:round_trip_input] == "1",
-            away_goal: params[:away_goal] == "1",
-            third_place_match: params[:third_place_match] == "1",
+        knockout = Knockout.create( is_round_trip: params[:round_trip] == "on",
+            away_goal: params[:away_goal] == "on",
+            third_place_match: params[:third_place_match] == "on",
             start_date: Date.parse(params[:start_date]),
             end_date: Date.parse(params[:end_date]), state: 0, cup: cup)
     end
 
     def generate_league_for_combination_cup(params, cup)
-        league = League.create(points_for_win: params[:points_for_win_input].to_i,
-            points_for_draw: params[:points_for_draw_input].to_i,
-            points_for_lost: params[:points_for_lost_input].to_i,
-            is_round_trip: params[:round_trip_input] == "1",
+        league = League.create(points_for_win: params[:points_for_win].to_i,
+            points_for_draw: params[:points_for_draw].to_i,
+            points_for_lost: params[:points_for_lost].to_i,
+            is_round_trip: params[:round_trip] == "on",
             start_date: Date.parse(params[:start_date]),
             end_date: Date.parse(params[:end_date]), state: 0,
             win_order: generate_win_order(params) ,cup: cup)
     end
 
     def generate_knockout_for_combination_cup(params, cup)
-        knockout = Knockout.create( is_round_trip: params[:round_trip_input] == "1",
-            away_goal: params[:away_goal] == "1",
-            third_place_match: params[:third_place_match] == "1",
+        knockout = Knockout.create( is_round_trip: params[:round_trip] == "on",
+            away_goal: params[:away_goal] == "on",
+            third_place_match: params[:third_place_match] == "on",
             state: 0, cup: cup)
     end
 
     def generate_win_order(params)
         win_order = []
-        params[:selected_win_order_items].split(',', -1).each do |win_factor|
+        params[:win_order].each do |win_factor|
             win_order << League.win_factors[win_factor]
         end
         win_order
