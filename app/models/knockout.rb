@@ -5,6 +5,7 @@ class Knockout < ApplicationRecord
     has_many :participants, through: :knockout_participant
     has_many :matches, dependent: :destroy
     has_many :knockout_nodes, dependent: :destroy
+    has_many :steps
     belongs_to :winner, class_name: "Participant", optional: true
     belongs_to :cup
 

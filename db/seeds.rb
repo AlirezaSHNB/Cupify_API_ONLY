@@ -90,8 +90,9 @@ PlayerParticipant.create(player: player_2_in_ping_pong_team_F, participant: ping
 
 ### Create knockout
 
-knockout_for_team_ping_pong_knockout_cup = Knockout.create(is_round_trip: true, away_goal: false,
-    third_place_match: false, start_date: Date.today - 5, state: 1, cup: team_ping_pong_knockout_cup,
+knockout_for_team_ping_pong_knockout_cup = Knockout.create(is_round_trip: true,
+    is_round_trip_final: false, away_goal: false, third_place_match: false,
+    start_date: Date.today - 5, state: 1, cup: team_ping_pong_knockout_cup,
     first_matches: {0=>[ping_pong_team_A.id, ping_pong_team_B.id], 1=>[ping_pong_team_C.id],
         2=>[ping_pong_team_D.id, ping_pong_team_E.id], 3=>[ping_pong_team_F.id]})
 
@@ -143,11 +144,21 @@ KnockoutParticipant.create(knockout: knockout_for_team_ping_pong_knockout_cup,
     number_of_opponents_fouls: 0, number_of_made_fouls: 0, number_of_yellow_cards: 0,
     number_of_red_cards: 0)
 
+### Create Quarter Final Steps
+
+quarter_final_step_1 = Step.create(name: "quarter final", phase: 1,
+    knockout: knockout_for_team_ping_pong_knockout_cup, cup: team_ping_pong_knockout_cup,
+    state: 4)
+quarter_final_step_2 = Step.create(name: "quarter final", phase: 2,
+    knockout: knockout_for_team_ping_pong_knockout_cup, cup: team_ping_pong_knockout_cup,
+    state: 4)
+
 ### First match between A and B is done
 
 first_match_between_A_and_B = Match.create(start_time: DateTime.now - 5 + 3.hour,
     end_time: DateTime.now - 5 + 4.hour + 30.minute, home_team: ping_pong_team_A,
-    knockout: knockout_for_team_ping_pong_knockout_cup, winner: ping_pong_team_A, state: 2,)
+    knockout: knockout_for_team_ping_pong_knockout_cup, winner: ping_pong_team_A, state: 2,
+    step: quarter_final_step_1)
 MatchParticipant.create(match: first_match_between_A_and_B, participant: ping_pong_team_A,
     number_of_scores: 19)
 MatchParticipant.create(match: first_match_between_A_and_B, participant: ping_pong_team_B,
@@ -201,7 +212,8 @@ Score.create(own_score: false, participant: ping_pong_team_A,
 
 second_match_between_A_and_B = Match.create(start_time: DateTime.now - 4 + 3.hour,
     end_time: DateTime.now - 4 + 4.hour + 30.minute, home_team: ping_pong_team_B,
-    knockout: knockout_for_team_ping_pong_knockout_cup,winner: ping_pong_team_A, state: 2)
+    knockout: knockout_for_team_ping_pong_knockout_cup,winner: ping_pong_team_A, state: 2,
+    step: quarter_final_step_2)
 MatchParticipant.create(match: second_match_between_A_and_B, participant: ping_pong_team_A,
     number_of_scores: 19)
 MatchParticipant.create(match: second_match_between_A_and_B, participant: ping_pong_team_B,
@@ -263,7 +275,8 @@ Score.create(own_score: false, participant: ping_pong_team_A,
 
 first_match_between_D_and_E = Match.create(start_time: DateTime.now - 3 + 3.hour,
     end_time: DateTime.now - 3 + 4.hour + 30.minute, home_team: ping_pong_team_D,
-    knockout: knockout_for_team_ping_pong_knockout_cup, winner: ping_pong_team_E, state: 2)
+    knockout: knockout_for_team_ping_pong_knockout_cup, winner: ping_pong_team_E, state: 2,
+    step: quarter_final_step_1)
 MatchParticipant.create(match: first_match_between_D_and_E, participant: ping_pong_team_D,
     number_of_scores: 3)
 MatchParticipant.create(match: first_match_between_D_and_E, participant: ping_pong_team_E,
@@ -317,7 +330,8 @@ Score.create(own_score: false, participant: ping_pong_team_E,
 
 second_match_between_D_and_E = Match.create(start_time: DateTime.now - 2 + 3.hour,
     end_time: DateTime.now - 2 + 4.hour + 30.minute, home_team: ping_pong_team_E,
-    knockout: knockout_for_team_ping_pong_knockout_cup, winner: ping_pong_team_E, state: 2)
+    knockout: knockout_for_team_ping_pong_knockout_cup, winner: ping_pong_team_E, state: 2,
+    step: quarter_final_step_2)
 MatchParticipant.create(match: second_match_between_D_and_E, participant: ping_pong_team_D,
     number_of_scores: 7)
 MatchParticipant.create(match: second_match_between_D_and_E, participant: ping_pong_team_E,
@@ -375,33 +389,52 @@ Score.create(own_score: false, participant: ping_pong_team_D,
 Score.create(own_score: false, participant: ping_pong_team_E,
     round: round_2_in_second_match_between_D_and_E) # final
 
+### Create Semi Final Steps
+
+semi_final_step_1 = Step.create(name: "semi final", phase: 1,
+    knockout: knockout_for_team_ping_pong_knockout_cup, cup: team_ping_pong_knockout_cup,
+    state: 1)
+semi_final_step_2 = Step.create(name: "semi final", phase: 2,
+    knockout: knockout_for_team_ping_pong_knockout_cup, cup: team_ping_pong_knockout_cup,
+    state: 1)
+
 ### First match between A and C is ready to start
 
 first_match_between_A_and_C = Match.create(start_time: DateTime.now + 3.hour,
-    home_team: ping_pong_team_A, knockout: knockout_for_team_ping_pong_knockout_cup, state: 0)
+    home_team: ping_pong_team_A, knockout: knockout_for_team_ping_pong_knockout_cup, state: 0,
+    step: semi_final_step_1)
 MatchParticipant.create(match: first_match_between_A_and_C, participant: ping_pong_team_A)
 MatchParticipant.create(match: first_match_between_A_and_C, participant: ping_pong_team_C)
 
 ### Second match between A and C is ready to start
 
 second_match_between_A_and_C = Match.create(start_time: DateTime.now + 1 + 3.hour,
-    home_team: ping_pong_team_C, knockout: knockout_for_team_ping_pong_knockout_cup, state: 0)
+    home_team: ping_pong_team_C, knockout: knockout_for_team_ping_pong_knockout_cup, state: 0,
+    step: semi_final_step_2)
 MatchParticipant.create(match: second_match_between_A_and_C, participant: ping_pong_team_A)
 MatchParticipant.create(match: second_match_between_A_and_C, participant: ping_pong_team_C)
 
 ### First match between E and F is ready to start
 
 first_match_between_E_and_F = Match.create(start_time: DateTime.now + 6.hour,
-    home_team: ping_pong_team_E, knockout: knockout_for_team_ping_pong_knockout_cup, state: 0)
+    home_team: ping_pong_team_E, knockout: knockout_for_team_ping_pong_knockout_cup, state: 0,
+    step: semi_final_step_1)
 MatchParticipant.create(match: first_match_between_E_and_F, participant: ping_pong_team_E)
 MatchParticipant.create(match: first_match_between_E_and_F, participant: ping_pong_team_F)
 
 ### Second match between E and F is ready to start
 
 second_match_between_E_and_F = Match.create(start_time: DateTime.now + 1 + 6.hour,
-    home_team: ping_pong_team_F, knockout: knockout_for_team_ping_pong_knockout_cup, state: 0)
+    home_team: ping_pong_team_F, knockout: knockout_for_team_ping_pong_knockout_cup, state: 0,
+    step: semi_final_step_2)
 MatchParticipant.create(match: second_match_between_E_and_F, participant: ping_pong_team_E)
 MatchParticipant.create(match: second_match_between_E_and_F, participant: ping_pong_team_F)
+
+### Create Final Steps
+
+final_step = Step.create(name: "final", phase: 0,
+    knockout: knockout_for_team_ping_pong_knockout_cup, cup: team_ping_pong_knockout_cup,
+    state: 0)
 
 ### Knockout Node
 
@@ -521,13 +554,27 @@ LeagueParticipant.create(league: league_A_for_individual_fifa23_comb_cup,
     number_of_opponents_fouls: 0, number_of_made_fouls: 0, number_of_yellow_cards: 0,
     number_of_red_cards: 0)
 
+### Create League Steps
+
+step_week_1_for_league_A = Step.create(name: "week 1", phase: 0,
+    league: league_A_for_individual_fifa23_comb_cup, cup: individual_fifa23_comb_cup,
+    state: 4)
+
+step_week_2_for_league_A = Step.create(name: "week 2", phase: 0,
+    league: league_A_for_individual_fifa23_comb_cup, cup: individual_fifa23_comb_cup,
+    state: 4)
+
+step_week_3_for_league_A = Step.create(name: "week 3", phase: 0,
+    league: league_A_for_individual_fifa23_comb_cup, cup: individual_fifa23_comb_cup,
+    state: 4)
+
 ### Matches for league A (Groupe A)
 
 ###### Match between A and B is done
 
 match_between_A_and_B = Match.create(start_time: DateTime.now - 50 + 3.hour,
     end_time: DateTime.now - 50 + 5.hour, league: league_A_for_individual_fifa23_comb_cup,
-    winner: fifa23_team_A, state: 2, league_weak: 1)
+    winner: fifa23_team_A, state: 2, step: step_week_1_for_league_A)
 MatchParticipant.create(match: match_between_A_and_B, participant: fifa23_team_A,
     number_of_scores: 2)
 MatchParticipant.create(match: match_between_A_and_B, participant: fifa23_team_B,
@@ -546,7 +593,7 @@ Score.create(own_score: true, participant: fifa23_team_A, player: player_in_fifa
 
 match_between_C_and_D = Match.create(start_time: DateTime.now - 50 + 6.hour,
     end_time: DateTime.now - 50 + 8.hour, league: league_A_for_individual_fifa23_comb_cup,
-    winner: fifa23_team_C, state: 2, league_weak: 1)
+    winner: fifa23_team_C, state: 2, step: step_week_1_for_league_A)
 MatchParticipant.create(match: match_between_A_and_B, participant: fifa23_team_C,
     number_of_scores: 3)
 MatchParticipant.create(match: match_between_A_and_B, participant: fifa23_team_D,
@@ -567,7 +614,7 @@ Score.create(own_score: false, participant: fifa23_team_C, player: player_in_fif
 
 match_between_A_and_C = Match.create(start_time: DateTime.now - 49 + 3.hour,
     end_time: DateTime.now - 49 + 5.hour, league: league_A_for_individual_fifa23_comb_cup,
-    winner: nil, state: 2, league_weak: 2)
+    winner: nil, state: 2, step: step_week_2_for_league_A)
 MatchParticipant.create(match: match_between_A_and_C, participant: fifa23_team_A,
     number_of_scores: 1)
 MatchParticipant.create(match: match_between_A_and_C, participant: fifa23_team_C,
@@ -586,7 +633,7 @@ Score.create(own_score: false, participant: fifa23_team_A, player: player_in_fif
 
 match_between_B_and_D = Match.create(start_time: DateTime.now - 49 + 6.hour,
     end_time: DateTime.now - 49 + 8.hour, league: league_A_for_individual_fifa23_comb_cup,
-    winner: fifa23_team_B, state: 2, league_weak: 2)
+    winner: fifa23_team_B, state: 2, step: step_week_2_for_league_A)
 MatchParticipant.create(match: match_between_B_and_D, participant: fifa23_team_B,
     number_of_scores: 2)
 MatchParticipant.create(match: match_between_B_and_D, participant: fifa23_team_D,
@@ -607,7 +654,7 @@ Score.create(own_score: false, participant: fifa23_team_D, player: player_in_fif
 
 match_between_B_and_C = Match.create(start_time: DateTime.now - 48 + 3.hour,
     end_time: DateTime.now - 48 + 5.hour, league: league_A_for_individual_fifa23_comb_cup,
-    winner: nil, state: 2, league_weak: 3)
+    winner: nil, state: 2, step: step_week_3_for_league_A)
 MatchParticipant.create(match: match_between_B_and_C, participant: fifa23_team_B,
     number_of_scores: 0)
 MatchParticipant.create(match: match_between_B_and_C, participant: fifa23_team_C,
@@ -622,7 +669,7 @@ round_of_match_between_B_and_C = Round.create(number: 1, match: match_between_B_
 
 match_between_A_and_D = Match.create(start_time: DateTime.now - 48 + 6.hour,
     end_time: DateTime.now - 48 + 8.hour, league: league_A_for_individual_fifa23_comb_cup,
-    winner: fifa23_team_A, state: 2, league_weak: 3)
+    winner: fifa23_team_A, state: 2, step: step_week_3_for_league_A)
 MatchParticipant.create(match: match_between_A_and_D, participant: fifa23_team_A,
     number_of_scores: 3)
 MatchParticipant.create(match: match_between_A_and_D, participant: fifa23_team_D,
@@ -672,13 +719,27 @@ LeagueParticipant.create(league: league_B_for_individual_fifa23_comb_cup,
     number_of_opponents_fouls: 0, number_of_made_fouls: 0, number_of_yellow_cards: 0,
     number_of_red_cards: 0)
 
-### Matches for league A (Groupe A)
+### Create League Steps
+
+step_week_1_for_league_B = Step.create(name: "week 1", phase: 0,
+    league: league_B_for_individual_fifa23_comb_cup, cup: individual_fifa23_comb_cup,
+    state: 4)
+
+step_week_2_for_league_B = Step.create(name: "week 2", phase: 0,
+    league: league_B_for_individual_fifa23_comb_cup, cup: individual_fifa23_comb_cup,
+    state: 4)
+
+step_week_3_for_league_B = Step.create(name: "week 3", phase: 0,
+    league: league_B_for_individual_fifa23_comb_cup, cup: individual_fifa23_comb_cup,
+    state: 4)
+
+### Matches for league B (Groupe B)
 
 ###### Match between E and F is done
 
 match_between_E_and_F = Match.create(start_time: DateTime.now - 50 + 3.hour,
     end_time: DateTime.now - 50 + 5.hour, league: league_B_for_individual_fifa23_comb_cup,
-    winner: fifa23_team_F, state: 2, league_weak: 1)
+    winner: fifa23_team_F, state: 2, step: step_week_1_for_league_B)
 MatchParticipant.create(match: match_between_E_and_F, participant: fifa23_team_E,
     number_of_scores: 0)
 MatchParticipant.create(match: match_between_E_and_F, participant: fifa23_team_F,
@@ -705,7 +766,7 @@ Score.create(own_score: false, participant: fifa23_team_F, player: player_in_fif
 
 match_between_G_and_H = Match.create(start_time: DateTime.now - 50 + 6.hour,
     end_time: DateTime.now - 50 + 8.hour, league: league_B_for_individual_fifa23_comb_cup,
-    winner: nil, state: 2, league_weak: 1)
+    winner: nil, state: 2, step: step_week_1_for_league_B)
 MatchParticipant.create(match: match_between_G_and_H, participant: fifa23_team_G,
     number_of_scores: 0)
 MatchParticipant.create(match: match_between_G_and_H, participant: fifa23_team_H,
@@ -720,7 +781,7 @@ round_of_match_between_G_and_H = Round.create(number: 1, match: match_between_G_
 
 match_between_E_and_G = Match.create(start_time: DateTime.now - 49 + 3.hour,
     end_time: DateTime.now - 49 + 5.hour, league: league_B_for_individual_fifa23_comb_cup,
-    winner: fifa23_team_G, state: 2, league_weak: 2)
+    winner: fifa23_team_G, state: 2, step: step_week_2_for_league_B)
 MatchParticipant.create(match: match_between_E_and_G, participant: fifa23_team_E,
     number_of_scores: 0)
 MatchParticipant.create(match: match_between_E_and_G, participant: fifa23_team_G,
@@ -737,7 +798,7 @@ Score.create(own_score: false, participant: fifa23_team_G, player: player_in_fif
 
 match_between_F_and_H = Match.create(start_time: DateTime.now - 49 + 6.hour,
     end_time: DateTime.now - 49 + 8.hour, league: league_B_for_individual_fifa23_comb_cup,
-    winner: fifa23_team_G, state: 2, league_weak: 1)
+    winner: fifa23_team_G, state: 2, step: step_week_2_for_league_B)
 MatchParticipant.create(match: match_between_F_and_H, participant: fifa23_team_F,
     number_of_scores: 4)
 MatchParticipant.create(match: match_between_F_and_H, participant: fifa23_team_H,
@@ -762,7 +823,7 @@ Score.create(own_score: true, participant: fifa23_team_F, player: player_in_fifa
 
 match_between_F_and_G = Match.create(start_time: DateTime.now - 48 + 3.hour,
     end_time: DateTime.now - 48 + 5.hour, league: league_B_for_individual_fifa23_comb_cup,
-    winner: fifa23_team_F, state: 2, league_weak: 3)
+    winner: fifa23_team_F, state: 2, step: step_week_3_for_league_B)
 MatchParticipant.create(match: match_between_F_and_G, participant: fifa23_team_F,
     number_of_scores: 3)
 MatchParticipant.create(match: match_between_F_and_G, participant: fifa23_team_G,
@@ -783,7 +844,7 @@ Score.create(own_score: false, participant: fifa23_team_F, player: player_in_fif
 
 match_between_E_and_H = Match.create(start_time: DateTime.now - 48 + 6.hour,
     end_time: DateTime.now - 48 + 8.hour, league: league_B_for_individual_fifa23_comb_cup,
-    winner: fifa23_team_H, state: 2, league_weak: 3)
+    winner: fifa23_team_H, state: 2, step: step_week_3_for_league_B)
 MatchParticipant.create(match: match_between_E_and_H, participant: fifa23_team_E,
     number_of_scores: 2)
 MatchParticipant.create(match: match_between_E_and_H, participant: fifa23_team_H,
@@ -837,8 +898,8 @@ CupParticipant.create(cup: individual_fifa23_comb_cup, participant: fifa23_team_
 
 ### Create knockout
 
-knockout_for_individual_fifa23_comb_cup = Knockout.create(is_round_trip: true, away_goal: false,
-    third_place_match: true, start_date: Date.today - 46, end_date: Date.today - 44,
+knockout_for_individual_fifa23_comb_cup = Knockout.create(is_round_trip: false, is_round_trip_final: false,
+    away_goal: false, third_place_match: true, start_date: Date.today - 46, end_date: Date.today - 44,
     state: 2, cup: individual_fifa23_comb_cup,
     first_matches: {0=>[fifa23_team_A.id, fifa23_team_H.id],
         1=>[fifa23_team_F.id, fifa23_team_C.id]},
@@ -863,13 +924,19 @@ KnockoutParticipant.create(knockout: knockout_for_individual_fifa23_comb_cup,
     number_of_opponents_fouls: 0, number_of_made_fouls: 0, number_of_yellow_cards: 0,
     number_of_red_cards: 0)
 
+### Create Semi Final Steps
+
+semi_final_step = Step.create(name: "semi final", phase: 0,
+    knockout: knockout_for_individual_fifa23_comb_cup, cup: individual_fifa23_comb_cup,
+    state: 4)
+
 ### Matches for knockout
 
 ###### Match between A and H in 1/2 is done
 
 match_between_A_and_H_in_semi_final = Match.create(start_time: DateTime.now - 46 + 3.hour,
     end_time: DateTime.now - 46 + 5.hour, knockout: knockout_for_individual_fifa23_comb_cup,
-    winner: fifa23_team_A, state: 2)
+    winner: fifa23_team_A, state: 2, step: semi_final_step)
 MatchParticipant.create(match: match_between_A_and_H_in_semi_final, participant: fifa23_team_A,
     number_of_scores: 1)
 MatchParticipant.create(match: match_between_A_and_H_in_semi_final, participant: fifa23_team_H,
@@ -886,7 +953,7 @@ Score.create(own_score: true, participant: fifa23_team_H, player: player_in_fifa
 
 match_between_F_and_C_in_semi_final = Match.create(start_time: DateTime.now - 46 + 6.hour,
     end_time: DateTime.now - 46 + 8.hour, knockout: knockout_for_individual_fifa23_comb_cup,
-    winner: fifa23_team_F, state: 2)
+    winner: fifa23_team_F, state: 2, step: semi_final_step)
 MatchParticipant.create(match: match_between_F_and_C_in_semi_final, participant: fifa23_team_F,
     number_of_scores: 1)
 MatchParticipant.create(match: match_between_F_and_C_in_semi_final, participant: fifa23_team_C,
@@ -899,11 +966,17 @@ round_of_match_between_F_and_C_in_semi_final = Round.create(number: 1,
 Score.create(own_score: false, participant: fifa23_team_F, player: player_in_fifa23_team_F,
     round: round_of_match_between_F_and_C_in_semi_final)
 
+### Create Semi Final Steps
+
+final_step = Step.create(name: "final", phase: 0,
+    knockout: knockout_for_individual_fifa23_comb_cup, cup: individual_fifa23_comb_cup,
+    state: 4)
+
 ###### Match between H and C in third-place match is done
 
 match_between_H_and_C_in_third_place_match = Match.create(start_time: DateTime.now - 44 + 3.hour,
     end_time: DateTime.now - 44 + 8.hour, knockout: knockout_for_individual_fifa23_comb_cup,
-    winner: fifa23_team_C, state: 2)
+    winner: fifa23_team_C, state: 2, step: final_step)
 MatchParticipant.create(match: match_between_H_and_C_in_third_place_match, participant: fifa23_team_H,
     number_of_scores: 1)
 MatchParticipant.create(match: match_between_H_and_C_in_third_place_match, participant: fifa23_team_C,
@@ -924,7 +997,7 @@ Score.create(own_score: false, participant: fifa23_team_C, player: player_in_fif
 
 match_between_A_and_F_in_final = Match.create(start_time: DateTime.now - 44 + 6.hour,
     end_time: DateTime.now - 44 + 8.hour, knockout: knockout_for_individual_fifa23_comb_cup,
-    winner: fifa23_team_F, state: 2)
+    winner: fifa23_team_F, state: 2, step: final_step)
 MatchParticipant.create(match: match_between_A_and_F_in_final, participant: fifa23_team_A,
     number_of_scores: 2)
 MatchParticipant.create(match: match_between_A_and_F_in_final, participant: fifa23_team_F,

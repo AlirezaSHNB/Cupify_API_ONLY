@@ -103,6 +103,7 @@ class CupsController < ApplicationController
 
     def generate_knockout_for_knockout_cup(params, cup)
         knockout = Knockout.create( is_round_trip: params[:round_trip] == "on",
+            is_round_trip_final: params[:round_trip_final] == "on",
             away_goal: params[:away_goal] == "on",
             third_place_match: params[:third_place_match] == "on",
             start_date: Date.parse(params[:start_date]),
@@ -121,6 +122,7 @@ class CupsController < ApplicationController
 
     def generate_knockout_for_combination_cup(params, cup)
         knockout = Knockout.create( is_round_trip: params[:round_trip] == "on",
+            is_round_trip_final: params[:round_trip_final] == "on",
             away_goal: params[:away_goal] == "on",
             third_place_match: params[:third_place_match] == "on",
             state: 0, cup: cup)

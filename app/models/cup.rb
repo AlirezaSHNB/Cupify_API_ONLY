@@ -3,6 +3,7 @@ class Cup < ApplicationRecord
     has_many :participants, through: :cup_participant
     has_many :leagues, dependent: :destroy
     has_many :knockouts, dependent: :destroy
+    has_many :steps
     belongs_to :winner, class_name: "Participant", optional: true
 
     enum mode: { league: 0, knockout: 1, combination: 2 }

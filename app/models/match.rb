@@ -10,6 +10,7 @@ class Match < ApplicationRecord
     belongs_to :league, optional: true
     belongs_to :knockout, optional: true
     belongs_to :home_team, class_name: "Participant", optional: true
+    belongs_to :step
 
     enum state: { ready_to_start: 0, in_progress: 1, done: 2 }
 end
