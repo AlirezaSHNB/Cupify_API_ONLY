@@ -95,14 +95,14 @@ class CupsController < ApplicationController
         league = League.new(points_for_win: params[:points_for_win].to_i,
             points_for_draw: params[:points_for_draw].to_i,
             points_for_lost: params[:points_for_lost].to_i,
-            is_round_trip: params[:round_trip] == "on",
+            is_round_trip: params[:round_trip_group] == "on",
             start_date: Date.parse(params[:start_date]),
             end_date: Date.parse(params[:end_date]), state: 0,
             win_order: generate_win_order(params) ,cup: cup)
     end
 
     def generate_knockout_for_knockout_cup(params, cup)
-        knockout = Knockout.create( is_round_trip: params[:round_trip] == "on",
+        knockout = Knockout.create( is_round_trip: params[:round_trip_knockout] == "on",
             is_round_trip_final: params[:round_trip_final] == "on",
             away_goal: params[:away_goal] == "on",
             third_place_match: params[:third_place_match] == "on",
@@ -114,14 +114,14 @@ class CupsController < ApplicationController
         league = League.create(points_for_win: params[:points_for_win].to_i,
             points_for_draw: params[:points_for_draw].to_i,
             points_for_lost: params[:points_for_lost].to_i,
-            is_round_trip: params[:round_trip] == "on",
+            is_round_trip: params[:round_trip_group] == "on",
             start_date: Date.parse(params[:start_date]),
             end_date: Date.parse(params[:end_date]), state: 0,
             win_order: generate_win_order(params) ,cup: cup)
     end
 
     def generate_knockout_for_combination_cup(params, cup)
-        knockout = Knockout.create( is_round_trip: params[:round_trip] == "on",
+        knockout = Knockout.create( is_round_trip: params[:round_trip_knockout] == "on",
             is_round_trip_final: params[:round_trip_final] == "on",
             away_goal: params[:away_goal] == "on",
             third_place_match: params[:third_place_match] == "on",
