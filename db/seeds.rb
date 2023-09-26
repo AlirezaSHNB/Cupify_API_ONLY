@@ -32,7 +32,7 @@ player_1_in_ping_pong_team_A = Player.create(first_name: "Alireza", last_name: "
     username: "alireza.sh", date_of_birth: Date.new(2000, 8, 17), nickname: "Jadis")
 player_2_in_ping_pong_team_A = Player.create(first_name: "Taha", last_name: "Kamali",
     username: "taha.k", date_of_birth: Date.new(1999, 4, 17))
-ping_pong_team_A = Participant.create(name: "AC Milan")
+ping_pong_team_A = Participant.create(name: "AC Milan", field: 3)
 PlayerParticipant.create(player: player_1_in_ping_pong_team_A, participant: ping_pong_team_A,
     number: 1)
 PlayerParticipant.create(player: player_2_in_ping_pong_team_A, participant: ping_pong_team_A,
@@ -42,7 +42,7 @@ player_1_in_ping_pong_team_B = Player.create(first_name: "Alireza", last_name: "
     username: "alireza.e", date_of_birth: Date.new(1998, 8, 17))
 player_2_in_ping_pong_team_B = Player.create(first_name: "Mohsen", last_name: "Sadeghi",
     username: "mohsen.s", date_of_birth: Date.new(2002, 10, 27), nickname: "Mosi")
-ping_pong_team_B = Participant.create(name: "Inter")
+ping_pong_team_B = Participant.create(name: "Inter", field: 3)
 PlayerParticipant.create(player: player_1_in_ping_pong_team_B, participant: ping_pong_team_B,
     number: 1)
 PlayerParticipant.create(player: player_2_in_ping_pong_team_B, participant: ping_pong_team_B,
@@ -52,7 +52,7 @@ player_1_in_ping_pong_team_C = Player.create(first_name: "Mahdi", last_name: "Ma
     username: "mahdi.m", date_of_birth: Date.new(1989, 2, 17))
 player_2_in_ping_pong_team_C = Player.create(first_name: "Hadi", last_name: "Nazeri",
     username: "hadi.n", date_of_birth: Date.new(2001, 8, 7))
-ping_pong_team_C = Participant.create(name: "Man City")
+ping_pong_team_C = Participant.create(name: "Man City", field: 3)
 PlayerParticipant.create(player: player_1_in_ping_pong_team_C, participant: ping_pong_team_C,
     number: 1)
 PlayerParticipant.create(player: player_2_in_ping_pong_team_C, participant: ping_pong_team_C,
@@ -62,7 +62,7 @@ player_1_in_ping_pong_team_D = Player.create(first_name: "Alireza", last_name: "
     username: "alireza.t", date_of_birth: Date.new(2001, 9, 9))
 player_2_in_ping_pong_team_D = Player.create(first_name: "Kazem", last_name: "Abar",
     username: "kazem.a", date_of_birth: Date.new(2001, 1, 1))
-ping_pong_team_D = Participant.create(name: "Barca")
+ping_pong_team_D = Participant.create(name: "Barca", field: 3)
 PlayerParticipant.create(player: player_1_in_ping_pong_team_D, participant: ping_pong_team_D,
     number: 1)
 PlayerParticipant.create(player: player_2_in_ping_pong_team_D, participant: ping_pong_team_D,
@@ -72,7 +72,7 @@ player_1_in_ping_pong_team_E = Player.create(first_name: "Omid", last_name: "Ali
     username: "omid.a", date_of_birth: Date.new(2002, 1, 17))
 player_2_in_ping_pong_team_E = Player.create(first_name: "Mohammad", last_name: "Rezaie",
     username: "mohammad.r", date_of_birth: Date.new(2000, 3, 2), nickname: "Tank")
-ping_pong_team_E = Participant.create(name: "Real")
+ping_pong_team_E = Participant.create(name: "Real", field: 3)
 PlayerParticipant.create(player: player_1_in_ping_pong_team_E, participant: ping_pong_team_E,
     number: 1)
 PlayerParticipant.create(player: player_2_in_ping_pong_team_E, participant: ping_pong_team_E,
@@ -82,7 +82,7 @@ player_1_in_ping_pong_team_F = Player.create(first_name: "Jamshid", last_name: "
     username: "jamshid.a", date_of_birth: Date.new(2000, 1, 9))
 player_2_in_ping_pong_team_F = Player.create(first_name: "Puya", last_name: "Karami",
     username: "puya.k", date_of_birth: Date.new(1999, 8, 17))
-ping_pong_team_F = Participant.create(name: "Man united")
+ping_pong_team_F = Participant.create(name: "Man united", field: 3)
 PlayerParticipant.create(player: player_1_in_ping_pong_team_F, participant: ping_pong_team_F,
     number: 1)
 PlayerParticipant.create(player: player_2_in_ping_pong_team_F, participant: ping_pong_team_F,
@@ -471,49 +471,49 @@ quarter_final_4_node = KnockoutNode.create(knockout: knockout_for_team_ping_pong
 
 player_in_fifa23_team_A = Player.create(first_name: "Alireza", last_name: "Kazemi",
     username: "alireza.k", date_of_birth: Date.new(1999, 2, 23))
-fifa23_team_A = Participant.create(name: "Everton")
+fifa23_team_A = Participant.create(name: "Everton", field: 4)
 PlayerParticipant.create(player: player_in_fifa23_team_A, participant: fifa23_team_A,
     number: 1)
 
 player_in_fifa23_team_B = Player.create(first_name: "Moein", last_name: "Fadaei",
     username: "moein.f", date_of_birth: Date.new(1999, 1, 3))
-fifa23_team_B = Participant.create(name: "Leeds")
+fifa23_team_B = Participant.create(name: "Leeds", field: 4)
 PlayerParticipant.create(player: player_in_fifa23_team_B, participant: fifa23_team_B,
     number: 1)
 
 player_in_fifa23_team_C = Player.create(first_name: "Asghar", last_name: "Yavari",
     username: "ashghar.y", date_of_birth: Date.new(1999, 10, 23))
-fifa23_team_C = Participant.create(name: "Arsenal")
+fifa23_team_C = Participant.create(name: "Arsenal", field: 4)
 PlayerParticipant.create(player: player_in_fifa23_team_C, participant: fifa23_team_C,
     number: 1)
 
 player_in_fifa23_team_D = Player.create(first_name: "Amir", last_name: "Rahnama",
     username: "amir.r", date_of_birth: Date.new(2000, 1, 1))
-fifa23_team_D = Participant.create(name: "Roma")
+fifa23_team_D = Participant.create(name: "Roma", field: 4)
 PlayerParticipant.create(player: player_in_fifa23_team_D, participant: fifa23_team_D,
     number: 1)
 
 player_in_fifa23_team_E = Player.create(first_name: "Mahdi", last_name: "Ghaderi",
     username: "mahdi.gh", date_of_birth: Date.new(2001, 9, 23))
-fifa23_team_E = Participant.create(name: "Paris")
+fifa23_team_E = Participant.create(name: "Paris", field: 4)
 PlayerParticipant.create(player: player_in_fifa23_team_E, participant: fifa23_team_E,
     number: 1)
 
 player_in_fifa23_team_F = Player.create(first_name: "Vahid", last_name: "Moradi",
     username: "vahid.m", date_of_birth: Date.new(2000, 6, 6))
-fifa23_team_F = Participant.create(name: "Lyon")
+fifa23_team_F = Participant.create(name: "Lyon", field: 4)
 PlayerParticipant.create(player: player_in_fifa23_team_F, participant: fifa23_team_F,
     number: 1)
 
 player_in_fifa23_team_G = Player.create(first_name: "Biok", last_name: "Dashti",
     username: "biok.d", date_of_birth: Date.new(1999, 1, 13))
-fifa23_team_G = Participant.create(name: "Valencia")
+fifa23_team_G = Participant.create(name: "Valencia", field: 4)
 PlayerParticipant.create(player: player_in_fifa23_team_G, participant: fifa23_team_G,
     number: 1)
 
 player_in_fifa23_team_H = Player.create(first_name: "Sadegh", last_name: "Kalaantari",
     username: "sadegh.k", date_of_birth: Date.new(2000, 10, 10))
-fifa23_team_H = Participant.create(name: "Aston Villa")
+fifa23_team_H = Participant.create(name: "Aston Villa", field: 4)
 PlayerParticipant.create(player: player_in_fifa23_team_H, participant: fifa23_team_H,
     number: 1)
 

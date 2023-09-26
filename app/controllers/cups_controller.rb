@@ -12,8 +12,9 @@ class CupsController < ApplicationController
     def show
         @cup = Cup.find(params[:id])
         @knockout = @cup.knockouts.first if ["knockout", "combination"].include?(@cup.mode)
+        @teams = @cup.participants
 
-        render json: {cup: @cup, knockout: @knockout }
+        render json: {cup: @cup, knockout: @knockout, teams: @teams }
     end
 
     def new
